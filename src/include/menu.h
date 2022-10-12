@@ -11,3 +11,4 @@ typedef struct {
 } menu_t;
 menu_t *makeMenu();
 void drawMenu(const menu_t *menu);
+void handleMenu(menu_t *menu);

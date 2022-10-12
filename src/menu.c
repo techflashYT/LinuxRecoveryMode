@@ -23,3 +23,31 @@ void drawMenu(const menu_t *menu) {
 		printf("%d: %s\x1b[0m\r\n", i + 1, menu->options[i].name);
 	}
 }
+uint8_t input = 0;
+void handleMenu(menu_t *menu) {
+	while ((input = getchar()) != 'q') {
+		// Arrow key
+		if (input == 27) {
+			input = getchar();
+			if (input == 91) {
+				input = getchar();
+				if (input == 65) {
+					if (menu->selected != 0) {
+						menu->selected--;
+					}
+				}
+				else if (input == 66) {
+					if (menu->selected != menu->numChoices - 1) {
+						menu->selected++;
+					}
+				}
+			}
+		}
+		// Enter
+		else if (input == '\n') {
+			menu->options[menu->selected].handler();
+		}
+		drawMenu(menu);
+		printf("character: %d", input);
+	}
+}

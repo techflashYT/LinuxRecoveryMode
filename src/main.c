@@ -4,7 +4,6 @@
 #include <termios.h>	//termios, TCSANOW, ECHO, ICANON
 #include <unistd.h>		//STDIN_FILENO
 #include <stdbool.h>
-uint8_t input = 0;
 void handler0();
 void handler1();
 void handler2();
@@ -31,30 +30,6 @@ int main() {
 	strcpy(menu->options[2].name, "This is an example menu option 3");
 	menu->options[2].handler = handler2;
 	drawMenu(menu);
-	while ((input = getchar()) != 'q') {
-		// Arrow key
-		if (input == 27) {
-			input = getchar();
-			if (input == 91) {
-				input = getchar();
-				if (input == 65) {
-					if (menu->selected != 0) {
-						menu->selected--;
-					}
-				}
-				else if (input == 66) {
-					if (menu->selected != menu->numChoices - 1) {
-						menu->selected++;
-					}
-				}
-			}
-		}
-		// Enter
-		else if (input == '\n') {
-			menu->options[menu->selected].handler();
-		}
-		drawMenu(menu);
-		printf("character: %d", input);
-	}
+	handleMenu(menu);
 	tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
 }
