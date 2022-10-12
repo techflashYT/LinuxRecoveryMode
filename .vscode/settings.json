@@ -1,0 +1,8 @@
+{
+	"c-cpp-flylint.includePaths": [
+		"src/include"
+	],
+	"c-cpp-flylint.clang.extraArgs": [
+		"--std=gnu17"
+	]
+}
