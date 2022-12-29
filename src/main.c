@@ -28,7 +28,9 @@ int main() {
 	// main menu
 	while (true) {
 		menu_t *menu = makeMenu();
+
 		initMenu(menu);
+		menu->type = MENU_TYPE_ORDERED_LIST;
 		strcpy(menu->title, "Linux Recovery Mode");
 		strcpy(menu->options[0].name, "Automatic Repair");
 		menu->options[0].handler = automaticRepairHandler;
@@ -36,18 +38,20 @@ int main() {
 		menu->options[1].handler = memtest86plusHandler;
 		strcpy(menu->options[2].name, "Shell for manual recovery");
 		menu->options[2].handler = dropToShellHandler;
+
 		drawMenu(menu);
 		void *addr = handleMenu(menu);
-		if (addr != NULL) {
-			// tear down the menu, we're gonna call a handler.
-			free(menu);
-			// goofy casting shenanigans to call to address.
-			((void (*)())addr)();
-		}
-		else {
+
+		if (addr == NULL) {
 			// address is NULL, user pressed q to quit.
 			break;
 		}
+
+		// tear down the menu, we're gonna call a handler.
+		free(menu);
+		// goofy casting shenanigans to call to address.
+		((void (*)())addr)();
+		// we returned from the handler, we're going back up to the top
 	}
 	// quit
 	tcsetattr(STDIN_FILENO, TCSANOW, &oldt);

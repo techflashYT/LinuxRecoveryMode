@@ -7,7 +7,7 @@ menu_t *makeMenu() {
 	return retVal;
 }
 void initMenu(menu_t *menu) {
-	// zero out the uninitialized memory that makeMenu gave us.
+	// zero out the uninitialized memory that makeMenu gave us, and set sane defaults
 	memset(menu, 0, sizeof(menu_t));
 }
 void initMenuPart2(menu_t *menu) {
