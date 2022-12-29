@@ -4,5 +4,7 @@
 	],
 	"c-cpp-flylint.clang.extraArgs": [
 		"--std=gnu17"
-	]
+	],
+	"editor.suggest.snippetsPreventQuickSuggestions": false,
+	"aiXcoder.showTrayIcon": true
 }
